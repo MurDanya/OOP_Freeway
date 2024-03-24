@@ -95,14 +95,14 @@ Road::free_road() {
 
 
 
-Auto::Auto(double init_speed, Auto* next_auto, Model* mod) : mod(mod),
-															 status(CONSTANT_SPEED),
-															 initial_speed(init_speed),
-															 cur_speed(init_speed),
-															 need_speed(-1),
-															 ticks_with_need_speed(0),
-															 coord(0),
-															 next_auto(next_auto) {}
+Auto::Auto(double init_speed, Auto* next_auto, Model* cur_model) :	cur_model(cur_model),
+																	status(CONSTANT_SPEED),
+																	initial_speed(init_speed),
+																	cur_speed(init_speed),
+																	need_speed(-1),
+																	ticks_with_need_speed(0),
+																	coord(0),
+																	next_auto(next_auto) {}
 
 bool
 Auto::tick() {
@@ -184,8 +184,8 @@ Auto::next_auto_left() {
 
 void
 Auto::compute_next_coord(double speed_next_auto) {
-	double coef_acceleration = mod->get_coef_acc();
-	double coef_slowdown = mod->get_coef_slow();
+	double coef_acceleration = cur_model->get_coef_acc();
+	double coef_slowdown = cur_model->get_coef_slow();
 	double time = 1.0 / TICKS_IN_SEC;
 	coord += cur_speed * time;
 	if (status == ACCELERATION)  {

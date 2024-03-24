@@ -5,7 +5,6 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
-    example();
+    return freewayWithGui();
 }
 

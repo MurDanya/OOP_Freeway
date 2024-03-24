@@ -1,21 +1,21 @@
 #pragma once
 #include <list>
 
-// Параметры модели
+// Внутренние параметры модели по умолчанию
 enum {
 	CONST_MIN_SPEED = 40,
 	CONST_MAX_SPEED = 100,
 	CONST_MIN_TIME = 1,
 	CONST_MAX_TIME = 5,
+	CONST_COEF_ACCELERATION = 10,
+	CONST_COEF_SLOWDOWN = -30,
 	LEN_AUTO = 18,
 	LEN_ROAD = 1000,
 	TICKS_IN_SEC = 60,
 	TIME_CRASH = 3,
-	CONST_COEF_ACCELERATION = 10,
-	CONST_COEF_SLOWDOWN = -30,
 };
 
-
+// Состояние Автомобиля
 enum StatusAuto {
 	CONSTANT_SPEED,
 	ACCELERATION,
@@ -34,10 +34,10 @@ public:
 	void artificial_delay(int, int);
 	double get_coord() const;
 	double get_speed() const;
-	void next_auto_left();
 	StatusAuto get_status() const;
+	void next_auto_left();
 private:
-	Model* mod;
+	Model* cur_model;
 	StatusAuto status;
 	double initial_speed, cur_speed, need_speed;
 	int ticks_with_need_speed;
@@ -52,8 +52,8 @@ public:
 	Road() {}
 	void tick();
 	void add_auto(double init_spped, Model* mod);
-	std::list<Auto>& get_list_auto();
 	bool free_road();
+	std::list<Auto>& get_list_auto();
 private:
 	std::list<Auto> autos;
 };
@@ -63,8 +63,6 @@ class Model {
 public:
 	Model();
 	void tick();
-	void live() {}
-	void pause() {}
 	double get_coef_acc();
 	double get_coef_slow();
 	void set_params(int, int, int, int, float, float);

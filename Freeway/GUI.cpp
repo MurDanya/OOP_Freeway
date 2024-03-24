@@ -188,7 +188,7 @@ in_rectangle(float x, float y, ImVec2& p1, ImVec2& p2, ImVec2& p3, ImVec2& p4) {
 
 
 // Main code
-int example()
+int freewayWithGui()
 {
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
@@ -443,6 +443,12 @@ int example()
                     ImGui::SliderInt("         ", &choosed_time, CONST_MIN_TIME, CONST_MAX_TIME, "%d sec");
                     if (ImGui::Button("Ok")) {
                         choose_auto->artificial_delay(choosed_speed, choosed_time);
+                        choosed_car = -1;
+                        choosed_speed = 0;
+                        choosed_time = CONST_MIN_TIME;
+                    }
+                    ImGui::SameLine();
+                    if (ImGui::Button("Cancel")) {
                         choosed_car = -1;
                         choosed_speed = 0;
                         choosed_time = CONST_MIN_TIME;

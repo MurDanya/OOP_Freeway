@@ -1,3 +1,3 @@
 #pragma once
 
-int example();
+int freewayWithGui();
