@@ -24,7 +24,7 @@ void ResetDevice();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
-// Загрузка изображений
+// Р—Р°РіСЂСѓР·РєР° РёР·РѕР±СЂР°Р¶РµРЅРёР№
 bool LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height)
 {
     PDIRECT3DTEXTURE9 texture;
@@ -42,7 +42,7 @@ bool LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, i
 
 
 
-// Параметры дороги
+// РџР°СЂР°РјРµС‚СЂС‹ РґРѕСЂРѕРіРё
 float scale_x, scale_y;
 int image_road_width = 0, image_road_height = 0;
 int car_width = 0, car_height = 0;
@@ -55,7 +55,7 @@ int true_road_width = 1920, true_road_height = 1080;
 int r = 100;
 
 
-// Подсчет размещения машинок
+// РџРѕРґСЃС‡РµС‚ СЂР°Р·РјРµС‰РµРЅРёСЏ РјР°С€РёРЅРѕРє
 PDIRECT3DTEXTURE9 coord_image_car(const Auto* car, ImVec2& p1, ImVec2& p2, ImVec2& p3, ImVec2& p4) {
     double coord = car->get_coord() / LEN_ROAD * parts_road.back();
     int num_part = 0;
@@ -268,21 +268,21 @@ int freewayWithGui()
     IM_ASSERT(ret);
 
 
-    // Параметры GUI
-    Model *model = new Model();                                                             // Модель
-    ImVec2 p1, p2, p3, p4;                                                                  // Координаты для машин
+    // РџР°СЂР°РјРµС‚СЂС‹ GUI
+    Model *model = new Model();                                                             // РњРѕРґРµР»СЊ
+    ImVec2 p1, p2, p3, p4;                                                                  // РљРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ РјР°С€РёРЅ
     int min_speed = CONST_MIN_SPEED, max_speed = CONST_MAX_SPEED;
     int min_time = CONST_MIN_TIME, max_time = CONST_MAX_TIME;
-    float coef_acc = 1, coef_slow = 1;                                                      // Параметры модели
+    float coef_acc = 1, coef_slow = 1;                                                      // РџР°СЂР°РјРµС‚СЂС‹ РјРѕРґРµР»Рё
     char val_str[64];
     float log_value;
-    float min_coef = log(0.1), max_coef = log(10);                                          // Дополнительные переменные для логарифмического слайдера
-    bool live = false;                                                                      // Непрерывная работа
-    bool is_begin = true;                                                                   // начало работы
-    bool artificial_delay = false;                                                          // Искусственное замедление
+    float min_coef = log(0.1), max_coef = log(10);                                          // Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ Р»РѕРіР°СЂРёС„РјРёС‡РµСЃРєРѕРіРѕ СЃР»Р°Р№РґРµСЂР°
+    bool live = false;                                                                      // РќРµРїСЂРµСЂС‹РІРЅР°СЏ СЂР°Р±РѕС‚Р°
+    bool is_begin = true;                                                                   // РЅР°С‡Р°Р»Рѕ СЂР°Р±РѕС‚С‹
+    bool artificial_delay = false;                                                          // РСЃРєСѓСЃСЃС‚РІРµРЅРЅРѕРµ Р·Р°РјРµРґР»РµРЅРёРµ
     int choosed_car = -1, choosed_speed = 0, choosed_time = CONST_MIN_TIME;
     Auto *choose_auto = NULL;
-    int choosed_cur_speed = 0;                                                              // Парметры искусственного замедления
+    int choosed_cur_speed = 0;                                                              // РџР°СЂРјРµС‚СЂС‹ РёСЃРєСѓСЃСЃС‚РІРµРЅРЅРѕРіРѕ Р·Р°РјРµРґР»РµРЅРёСЏ
 
 
     // Main loop
