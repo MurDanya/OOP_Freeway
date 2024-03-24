@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 
-// Внутренние параметры модели по умолчанию
+// Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїР°СЂР°РјРµС‚СЂС‹ РјРѕРґРµР»Рё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 enum {
 	CONST_MIN_SPEED = 40,
 	CONST_MAX_SPEED = 100,
@@ -15,7 +15,7 @@ enum {
 	TIME_CRASH = 3,
 };
 
-// Состояние Автомобиля
+// РЎРѕСЃС‚РѕСЏРЅРёРµ РђРІС‚РѕРјРѕР±РёР»СЏ
 enum StatusAuto {
 	CONSTANT_SPEED,
 	ACCELERATION,
