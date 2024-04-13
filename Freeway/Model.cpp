@@ -19,19 +19,9 @@ Model::tick() {
 		--ticks_to_next_auto;
 	if (ticks_to_next_auto <= 0 && cur_road.free_road()) {
 		ticks_to_next_auto = (min_time + rand() % (max_time - min_time + 1)) * TICKS_IN_SEC;
-		cur_road.add_auto(min_speed + rand() % (max_speed - min_speed + 1), this);
+		cur_road.add_auto(min_speed + rand() % (max_speed - min_speed + 1), coef_acceleration, coef_slowdown);
 	}
 	cur_road.tick();
-}
-
-double
-Model::get_coef_acc() {
-	return coef_acceleration;
-}
-
-double
-Model::get_coef_slow() {
-	return coef_slowdown;
 }
 
 void
@@ -72,12 +62,12 @@ Road::tick() {
 }
 
 void
-Road::add_auto(double init_speed, Model* mod) {
+Road::add_auto(double init_speed, double coef_acc, double coef_slow) {
 	Auto* next_auto = NULL;
 	if (!autos.empty()) {
 		next_auto = &autos.back();
 	}
-	autos.push_back(Auto(init_speed, next_auto, mod));
+	autos.push_back(Auto(init_speed, next_auto, coef_acc, coef_slow));
 }
 
 std::list<Auto>&
@@ -95,14 +85,17 @@ Road::free_road() {
 
 
 
-Auto::Auto(double init_speed, Auto* next_auto, Model* cur_model) :	cur_model(cur_model),
-																	status(CONSTANT_SPEED),
-																	initial_speed(init_speed),
-																	cur_speed(init_speed),
-																	need_speed(-1),
-																	ticks_with_need_speed(0),
-																	coord(0),
-																	next_auto(next_auto) {}
+Auto::Auto(double init_speed, Auto* next_auto, double coef_acc, double coef_slow) :
+	status(CONSTANT_SPEED),
+	initial_speed(init_speed),
+	cur_speed(init_speed),
+	need_speed(-1),
+	coef_acceleration(coef_acc),
+	coef_slowdown(coef_slow),
+	ticks_with_need_speed(0),
+	coord(0),
+	next_auto(next_auto)
+{}
 
 bool
 Auto::tick() {
@@ -184,8 +177,6 @@ Auto::next_auto_left() {
 
 void
 Auto::compute_next_coord(double speed_next_auto) {
-	double coef_acceleration = cur_model->get_coef_acc();
-	double coef_slowdown = cur_model->get_coef_slow();
 	double time = 1.0 / TICKS_IN_SEC;
 	coord += cur_speed * time;
 	if (status == ACCELERATION)  {

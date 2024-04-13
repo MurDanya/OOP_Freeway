@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 
-// Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїР°СЂР°РјРµС‚СЂС‹ РјРѕРґРµР»Рё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+// Внутренние параметры модели по умолчанию
 enum {
 	CONST_MIN_SPEED = 40,
 	CONST_MAX_SPEED = 100,
@@ -15,7 +15,7 @@ enum {
 	TIME_CRASH = 3,
 };
 
-// РЎРѕСЃС‚РѕСЏРЅРёРµ РђРІС‚РѕРјРѕР±РёР»СЏ
+// Состояние Автомобиля
 enum StatusAuto {
 	CONSTANT_SPEED,
 	ACCELERATION,
@@ -28,7 +28,7 @@ class Model;
 
 class Auto {
 public:
-	Auto(double init_speed, Auto* next_auto, Model* mod);
+	Auto(double init_speed, Auto* next_auto, double coef_acc, double coef_slow);
 	bool tick();
 	void crash();
 	void artificial_delay(int, int);
@@ -37,9 +37,9 @@ public:
 	StatusAuto get_status() const;
 	void next_auto_left();
 private:
-	Model* cur_model;
 	StatusAuto status;
 	double initial_speed, cur_speed, need_speed;
+	double coef_acceleration, coef_slowdown;
 	int ticks_with_need_speed;
 	double coord;
 	Auto* next_auto;
@@ -51,7 +51,7 @@ class Road {
 public:
 	Road() {}
 	void tick();
-	void add_auto(double init_spped, Model* mod);
+	void add_auto(double init_spped, double coef_acc, double coef_slow);
 	bool free_road();
 	std::list<Auto>& get_list_auto();
 private:
@@ -63,8 +63,6 @@ class Model {
 public:
 	Model();
 	void tick();
-	double get_coef_acc();
-	double get_coef_slow();
 	void set_params(int, int, int, int, float, float);
 	Road& get_road();
 private:
